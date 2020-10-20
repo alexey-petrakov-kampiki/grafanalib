@@ -28,7 +28,7 @@ def test_serialization():
         yAxes=G.YAxes(
             G.YAxis(format=G.SHORT_FORMAT, label="CPU seconds / second"),
             G.YAxis(format=G.SHORT_FORMAT),
-        ],
+        ),
         gridPos=G.GridPos(h=8, w=12, x=0, y=0)
     )
     stream = StringIO()
@@ -53,7 +53,7 @@ def test_auto_id():
                                 refId='A',
                             ),
                         ],
-                        yAxes=G.Yaxes(
+                        yAxes=G.YAxes(
                             G.YAxis(
                                 format=G.SHORT_FORMAT, label="CPU seconds"
                             ),
@@ -76,9 +76,10 @@ def test_auto_refids_preserves_provided_ids():
     """
     dashboard = G.Dashboard(
         title="Test dashboard",
-        rows=[
+        panels=[
             G.Row(panels=[
                 G.Graph(
+                    G.GridPos(h=8, w=12, x=0, y=0),
                     title="CPU Usage by Namespace (rate[5m])",
                     targets=[
                         G.Target(
@@ -95,12 +96,14 @@ def test_auto_refids_preserves_provided_ids():
                         ),
                     ],
                 ).auto_ref_ids()
-            ]),
+            ],
+                gridPos=G.GridPos(h=8, w=12, x=0, y=0),
+            ),
         ],
     )
-    assert dashboard.rows[0].panels[0].targets[0].refId == 'A'
-    assert dashboard.rows[0].panels[0].targets[1].refId == 'Q'
-    assert dashboard.rows[0].panels[0].targets[2].refId == 'B'
+    assert dashboard.panels[0].panels[0].targets[0].refId == 'A'
+    assert dashboard.panels[0].panels[0].targets[1].refId == 'Q'
+    assert dashboard.panels[0].panels[0].targets[2].refId == 'B'
 
 
 def test_auto_refids():
@@ -110,21 +113,24 @@ def test_auto_refids():
     """
     dashboard = G.Dashboard(
         title="Test dashboard",
-        rows=[
+        panels=[
             G.Row(panels=[
                 G.Graph(
+                    G.GridPos(h=8, w=12, x=0, y=0),
                     title="CPU Usage by Namespace (rate[5m])",
                     targets=[G.Target(expr="metric %d" % i)
                              for i in range(53)],
                 ).auto_ref_ids()
-            ]),
+            ],
+                gridPos=G.GridPos(h=8, w=12, x=0, y=0)
+            ),
         ],
     )
-    assert dashboard.rows[0].panels[0].targets[0].refId == 'A'
-    assert dashboard.rows[0].panels[0].targets[25].refId == 'Z'
-    assert dashboard.rows[0].panels[0].targets[26].refId == 'AA'
-    assert dashboard.rows[0].panels[0].targets[51].refId == 'AZ'
-    assert dashboard.rows[0].panels[0].targets[52].refId == 'BA'
+    assert dashboard.panels[0].panels[0].targets[0].refId == 'A'
+    assert dashboard.panels[0].panels[0].targets[25].refId == 'Z'
+    assert dashboard.panels[0].panels[0].targets[26].refId == 'AA'
+    assert dashboard.panels[0].panels[0].targets[51].refId == 'AZ'
+    assert dashboard.panels[0].panels[0].targets[52].refId == 'BA'
 
 
 def test_row_show_title():

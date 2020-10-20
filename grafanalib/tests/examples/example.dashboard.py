@@ -1,16 +1,17 @@
 from grafanalib.core import (
     Alert, AlertCondition, Dashboard, Graph,
     GreaterThan, OP_AND, OPS_FORMAT, Row, RTYPE_SUM, SECONDS_FORMAT,
-    SHORT_FORMAT, single_y_axis, Target, TimeRange, YAxes, YAxis
+    SHORT_FORMAT, single_y_axis, Target, TimeRange, YAxes, YAxis, GridPos
 )
 
 
 dashboard = Dashboard(
     title="Frontend Stats",
-    rows=[
+    panels=[
         Row(panels=[
           Graph(
-              title="Frontend QPS",
+            gridPos=GridPos(h=8, w=12, x=0, y=0),
+            title="Frontend QPS",
             dataSource='My Prometheus',
             targets=[
                 Target(
@@ -62,6 +63,7 @@ dashboard = Dashboard(
             )
             ),
           Graph(
+              gridPos=GridPos(h=8, w=12, x=0, y=0),
               title="Frontend latency",
               dataSource='My Prometheus',
               targets=[
@@ -78,6 +80,8 @@ dashboard = Dashboard(
               ],
               yAxes=single_y_axis(format=SECONDS_FORMAT),
           ),
-        ]),
+        ],
+            gridPos=GridPos(h=8, w=12, x=0, y=0),
+        ),
     ],
 ).auto_panel_ids()

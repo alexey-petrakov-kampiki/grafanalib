@@ -9,7 +9,7 @@ The graph shows the following metrics for HTTP requests to the URL path "/login"
 
 from grafanalib.core import (
     Dashboard, Graph, Legend, NULL_AS_NULL, Row, SECONDS_FORMAT,
-    SHORT_FORMAT, YAxes, YAxis
+    SHORT_FORMAT, YAxes, YAxis, GridPos
 )
 
 from grafanalib.elasticsearch import (
@@ -41,6 +41,7 @@ tgts = [
 ]
 
 g = Graph(
+    gridPos=GridPos(h=8, w=12, x=0, y=0),
     title="login requests",
     dataSource="elasticsearch",
     targets=tgts,
@@ -89,7 +90,6 @@ g = Graph(
         ),
     ),
     transparent=True,
-    span=12,
 )
 
-dashboard = Dashboard(title="HTTP dashboard", rows=[Row(panels=[g])])
+dashboard = Dashboard(title="HTTP dashboard", panels=[Row(panels=[g], gridPos=GridPos(h=8, w=12, x=0, y=0))])
