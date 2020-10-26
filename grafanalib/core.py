@@ -1325,7 +1325,7 @@ class AlertList(object):
 
 
 @attr.s
-class Stat(object):
+class Stat(Panel):
     """Generates Stat panel json structure
 
     Grafana doc on stat: https://grafana.com/docs/grafana/latest/panels/visualizations/stat-panel/
@@ -1355,35 +1355,25 @@ class Stat(object):
     :param transparent: defines if the panel should be transparent
     """
 
-    dataSource = attr.ib()
-    targets = attr.ib()
-    title = attr.ib()
-    description = attr.ib(default=None)
     colorMode = attr.ib(default='value')
     graphMode = attr.ib(default='area')
     orientation = attr.ib(default='auto')
     alignment = attr.ib(default='auto')
     editable = attr.ib(default=True, validator=instance_of(bool))
     format = attr.ib(default='none')
-    height = attr.ib(default=None)
-    id = attr.ib(default=None)
-    links = attr.ib(default=attr.Factory(list))
     mappings = attr.ib(default=attr.Factory(list))
     span = attr.ib(default=6)
-    thresholds = attr.ib(default='')
-    timeFrom = attr.ib(default=None)
-    transparent = attr.ib(default=False, validator=instance_of(bool))
     reduceCalc = attr.ib(default='mean', type=str)
     decimals = attr.ib(default=None)
 
     def to_json_data(self):
         return {
+            'gridPos': self.gridPos,
             'datasource': self.dataSource,
             'description': self.description,
             'editable': self.editable,
             'id': self.id,
             'links': self.links,
-            'height': self.height,
             'fieldConfig': {
                 'defaults': {
                     'custom': {},
