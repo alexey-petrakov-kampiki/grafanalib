@@ -1402,6 +1402,7 @@ class Stat(Panel):
             'transparent': self.transparent,
             'type': STAT_TYPE,
             'timeFrom': self.timeFrom,
+            'pluginVersion': self.pluginVersion,
         }
 
 
