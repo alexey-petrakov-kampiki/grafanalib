@@ -1374,30 +1374,27 @@ class Stat(Panel):
             'editable': self.editable,
             'id': self.id,
             'links': self.links,
-            'fieldConfig': {
-                'defaults': {
-                    'custom': {},
-                    'decimals': self.decimals,
-                    'mappings': self.mappings,
-                    'thresholds': {
-                        'mode': 'absolute',
-                        'steps': self.thresholds,
-                    },
-                    'unit': self.format
-                }
-            },
             'options': {
                 'colorMode': self.colorMode,
+                'fieldOptions': {
+                    'calcs': [
+                        self.reduceCalc,
+                    ],
+                    'defaults': {
+                        'decimals': self.decimals,
+                        'mappings': self.mappings,
+                        'thresholds': {
+                            'mode': 'absolute',
+                            'steps': self.thresholds,
+                        },
+                        'unit': self.format,
+                    },
+                    'overrides': [],
+                    'values': False,
+                },
                 'graphMode': self.graphMode,
                 'justifyMode': self.alignment,
                 'orientation': self.orientation,
-                'reduceOptions': {
-                    'calcs': [
-                        self.reduceCalc
-                    ],
-                    'fields': '',
-                    'values': False
-                }
             },
             'span': self.span,
             'targets': self.targets,
